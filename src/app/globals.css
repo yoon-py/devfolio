@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Pretendard Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  --color-primary: #58a6ff;
+}
+
+/* ── Preset: GitHub Dark (default) ── */
+:root, [data-preset="github-dark"] {
+  --gh-bg: #0d1117;
+  --gh-surface: #161b22;
+  --gh-border: #30363d;
+  --gh-blue: #58a6ff;
+  --gh-green: #7ee787;
+  --gh-purple: #d2a8ff;
+  --gh-orange: #d29922;
+  --gh-text: #e6edf3;
+  --gh-muted: #7d8590;
+}
+
+/* ── Preset: VS Code Dark ── */
+[data-preset="vscode"] {
+  --gh-bg: #1e1e1e;
+  --gh-surface: #252526;
+  --gh-border: #3c3c3c;
+  --gh-blue: #569cd6;
+  --gh-green: #6a9955;
+  --gh-purple: #c586c0;
+  --gh-orange: #ce9178;
+  --gh-text: #d4d4d4;
+  --gh-muted: #808080;
+}
+
+/* ── Preset: Dracula ── */
+[data-preset="dracula"] {
+  --gh-bg: #282a36;
+  --gh-surface: #343746;
+  --gh-border: #44475a;
+  --gh-blue: #8be9fd;
+  --gh-green: #50fa7b;
+  --gh-purple: #ff79c6;
+  --gh-orange: #ffb86c;
+  --gh-text: #f8f8f2;
+  --gh-muted: #6272a4;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .cursor-blink { animation: none !important; opacity: 1; }
+}
+
+/* Terminal cursor blink */
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.cursor-blink {
+  animation: blink-cursor 1s step-end infinite;
+}
+
+/* Terminal window frame */
+.terminal-frame {
+  background: var(--gh-surface);
+  border: 1px solid var(--gh-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.terminal-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--gh-border);
+}
+.terminal-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* Language color line for project cards */
+.lang-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 0 0 12px 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.group:hover .lang-line {
+  opacity: 1;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-primary, #58a6ff);
+  outline-offset: 2px;
+}
+
+/* Reveal animation */
+.reveal-fade {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-fade.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-fade { opacity: 1; transform: none; transition: none; }
+}
+
+/* Card hover */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+/* Scroll progress */
+.scroll-progress {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  height: 2px;
+  background: var(--color-primary, #58a6ff);
+  z-index: 100;
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* Hero load animation */
+@keyframes fade-up { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+.animate-fade-up { animation: fade-up 0.6s cubic-bezier(0.16,1,0.3,1) forwards; }
+.animate-fade-up-d1 { animation-delay:150ms; opacity:0; }
+.animate-fade-up-d2 { animation-delay:300ms; opacity:0; }
+@media (prefers-reduced-motion:reduce) {
+  .animate-fade-up { animation:none; opacity:1; transform:none; }
+}
